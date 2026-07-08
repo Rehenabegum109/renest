@@ -1,14 +1,43 @@
-import { Router } from "express";
+import express from "express";
 import { PropertyController } from "./property.controller";
 import { auth } from "../../middleware/auth";
 
 
-const router = Router();
+const router = express.Router();
 
-router.post(
-  "/landlord/properties",
+
+// Public
+router.get(
+  "/",
+  PropertyController.getAllProperties
+);
+
+router.get(
+  "/:id",
+  PropertyController.getPropertyById
+);
+
+
+// Landlord
+export const landlordRouter = express.Router();
+
+landlordRouter.post(
+  "/properties",
   auth("LANDLORD"),
   PropertyController.createProperty
 );
 
-export default router;
+landlordRouter.put(
+  "/properties/:id",
+  auth("LANDLORD"),
+  PropertyController.updateProperty
+);
+
+landlordRouter.delete(
+  "/properties/:id",
+  auth("LANDLORD"),
+  PropertyController.deleteProperty
+);
+
+
+export const PropertyRoutes = router;

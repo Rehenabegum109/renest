@@ -17,7 +17,7 @@ router.post(
     AuthController.login
 );
 router.get(
-    "/me",auth,
+    "/me",auth(),
     AuthController.getMe
 );
 

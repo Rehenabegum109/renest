@@ -1,24 +1,80 @@
+
+
+import httpStatus from "http-status";
 import { Request, Response } from "express";
+
 import { PropertyService } from "./property.service";
+import catchAsync from "../../utils/catchAsync";
+import sendResponse from "../../utils/sendResponse";
 
-const createProperty = async (
-  req: any,
-  res: Response
-) => {
-
+const createProperty = catchAsync(async (req: Request & { user?: any }, res: Response) => { 
   const result = await PropertyService.createProperty(
     req.body,
     req.user.id
   );
 
-  res.status(201).json({
+  sendResponse(res, {
     success: true,
+    statusCode: httpStatus.CREATED,
     message: "Property created successfully",
-    data: result
+    data: result,
   });
+});
 
-};
+const getAllProperties = catchAsync(async (req: Request, res: Response) => {
+  const result = await PropertyService.getAllProperties(req.query);
+
+  sendResponse(res, {
+    success: true,
+    statusCode: httpStatus.OK,
+    message: "Properties retrieved successfully",
+    data: result,
+  });
+});
+
+const getPropertyById = catchAsync(async (req: Request, res: Response) => {
+  const { id } = req.params;
+
+  const result = await PropertyService.getPropertyById(id);
+
+  sendResponse(res, {
+    success: true,
+    statusCode: httpStatus.OK,
+    message: "Property retrieved successfully",
+    data: result,
+  });
+});
+
+const updateProperty = catchAsync(async (req: Request, res: Response) => {
+  const { id } = req.params;
+
+  const result = await PropertyService.updateProperty(id, req.body);
+
+  sendResponse(res, {
+    success: true,
+    statusCode: httpStatus.OK,
+    message: "Property updated successfully",
+    data: result,
+  });
+});
+
+const deleteProperty = catchAsync(async (req: Request, res: Response) => {
+  const { id } = req.params;
+
+  const result = await PropertyService.deleteProperty(id);
+
+  sendResponse(res, {
+    success: true,
+    statusCode: httpStatus.OK,
+    message: "Property deleted successfully",
+    data: result,
+  });
+});
 
 export const PropertyController = {
-  createProperty
+  createProperty,
+  getAllProperties,
+  getPropertyById,
+  updateProperty,
+  deleteProperty,
 };
