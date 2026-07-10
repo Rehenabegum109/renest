@@ -157,6 +157,24 @@ const updateProperty = async (
 };
 
 const deleteProperty = async (id: string) => {
+
+  // delete reviews first
+  await prisma.review.deleteMany({
+    where: {
+      propertyId: id,
+    },
+  });
+
+
+ 
+  await prisma.rentalRequest.deleteMany({
+    where: {
+      propertyId: id,
+    },
+  });
+
+
+
   return await prisma.property.delete({
     where: {
       id,

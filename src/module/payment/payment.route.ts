@@ -1,6 +1,8 @@
 import express from "express";
 import { PaymentController } from "./payment.controller";
 import { auth } from "../../middleware/auth";
+import { PaymentValidation } from "./payment.validation";
+import { validateRequest } from "../../middleware/validateRequest";
 
 
 const router = express.Router();
@@ -22,11 +24,11 @@ router.get(
 );
 
 router.post(
- "/create",
- auth("TENANT"),
- PaymentController.createCheckoutSession
+  "/create",
+  auth("TENANT"),
+  validateRequest(PaymentValidation.createPaymentValidation),
+  PaymentController.createCheckoutSession
 );
-
 
 
 router.get(
@@ -46,7 +48,7 @@ router.get(
 
 
 router.post(
- "/webhook",
+ "/confirm",
  PaymentController.stripeWebhook
 );
 

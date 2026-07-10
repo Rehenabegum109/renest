@@ -1,6 +1,8 @@
 import express from "express";
 import { CategoryController } from "./category.controller";
 import { auth } from "../../middleware/auth";
+import { CategoryValidation } from "./category.validation";
+import { validateRequest } from "../../middleware/validateRequest";
 
 
 const router = express.Router();
@@ -19,18 +21,19 @@ router.get(
 );
 
 
-// Admin
 router.post(
- "/",
- auth("ADMIN"),
- CategoryController.createCategory
+  "/",
+  auth("ADMIN"),
+  validateRequest(CategoryValidation.createCategoryValidation),
+  CategoryController.createCategory
 );
 
 
 router.patch(
  "/:id",
- auth("ADMIN"),
- CategoryController.updateCategory
+auth("ADMIN"),
+  validateRequest(CategoryValidation.updateCategoryValidation),
+  CategoryController.updateCategory
 );
 
 

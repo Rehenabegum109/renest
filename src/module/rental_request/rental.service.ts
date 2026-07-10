@@ -2,17 +2,15 @@ import { Prisma, RentalStatus } from "@prisma/client";
 import { prisma } from "../../lib/prisma";
 
 const createRentalRequest = async (
-  payload: Prisma.RentalRequestCreateInput,
+  payload: any,
   tenantId: string
 ) => {
-  // Property exists?
   const property = await prisma.property.findUniqueOrThrow({
     where: {
-      id: payload.property.connect?.id as string,
+      id: payload.propertyId,
     },
   });
 
-  // Property available?
   if (!property.isAvailable) {
     throw new Error("Property is not available");
   }
@@ -25,7 +23,11 @@ const createRentalRequest = async (
           id: tenantId,
         },
       },
-      property: payload.property,
+      property: {
+        connect: {
+          id: payload.propertyId,
+        },
+      },
     },
     include: {
       tenant: true,
@@ -35,7 +37,6 @@ const createRentalRequest = async (
 
   return rental;
 };
-
 const getMyRentalRequests = async (tenantId: string) => {
   return await prisma.rentalRequest.findMany({
     where: {
