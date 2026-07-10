@@ -25,19 +25,19 @@ export declare const PaymentService: {
             createdAt: Date;
             updatedAt: Date;
             message: string | null;
-            tenantId: string;
             propertyId: string;
+            tenantId: string;
         };
     } & {
         id: string;
         status: import("../../../generated/prisma").$Enums.PaymentStatus;
         createdAt: Date;
         updatedAt: Date;
+        rentalRequestId: string;
         transactionId: string;
         amount: number;
         provider: import("../../../generated/prisma").$Enums.PaymentProvider;
         paidAt: Date | null;
-        rentalRequestId: string;
     })[]>;
     getPaymentById: (id: string) => Promise<{
         rentalRequest: {
@@ -61,19 +61,19 @@ export declare const PaymentService: {
             createdAt: Date;
             updatedAt: Date;
             message: string | null;
-            tenantId: string;
             propertyId: string;
+            tenantId: string;
         };
     } & {
         id: string;
         status: import("../../../generated/prisma").$Enums.PaymentStatus;
         createdAt: Date;
         updatedAt: Date;
+        rentalRequestId: string;
         transactionId: string;
         amount: number;
         provider: import("../../../generated/prisma").$Enums.PaymentProvider;
         paidAt: Date | null;
-        rentalRequestId: string;
     }>;
     handleStripeWebhook: (event: Stripe.Event) => Promise<true | undefined>;
 };

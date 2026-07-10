@@ -1,4 +1,4 @@
-import { Prisma } from "@prisma/client";
+import { Prisma } from "../../../generated/prisma";
 export declare const PropertyService: {
     createProperty: (payload: any, landlordId: string) => Promise<{
         category: {
@@ -80,8 +80,8 @@ export declare const PropertyService: {
             id: string;
             createdAt: Date;
             updatedAt: Date;
-            tenantId: string;
             propertyId: string;
+            tenantId: string;
             rating: number;
             comment: string | null;
         }[];

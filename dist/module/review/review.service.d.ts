@@ -3,8 +3,8 @@ export declare const ReviewService: {
         id: string;
         createdAt: Date;
         updatedAt: Date;
-        tenantId: string;
         propertyId: string;
+        tenantId: string;
         rating: number;
         comment: string | null;
     }>;
@@ -17,8 +17,8 @@ export declare const ReviewService: {
         id: string;
         createdAt: Date;
         updatedAt: Date;
-        tenantId: string;
         propertyId: string;
+        tenantId: string;
         rating: number;
         comment: string | null;
     })[]>;

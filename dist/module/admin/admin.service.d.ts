@@ -26,8 +26,8 @@ export declare const AdminService: {
             id: string;
             createdAt: Date;
             updatedAt: Date;
-            tenantId: string;
             propertyId: string;
+            tenantId: string;
             rating: number;
             comment: string | null;
         }[];
@@ -69,11 +69,11 @@ export declare const AdminService: {
             status: import("../../../generated/prisma").$Enums.PaymentStatus;
             createdAt: Date;
             updatedAt: Date;
+            rentalRequestId: string;
             transactionId: string;
             amount: number;
             provider: import("../../../generated/prisma").$Enums.PaymentProvider;
             paidAt: Date | null;
-            rentalRequestId: string;
         }[];
         tenant: {
             id: string;
@@ -86,8 +86,8 @@ export declare const AdminService: {
         createdAt: Date;
         updatedAt: Date;
         message: string | null;
-        tenantId: string;
         propertyId: string;
+        tenantId: string;
     })[]>;
 };
 //# sourceMappingURL=admin.service.d.ts.map

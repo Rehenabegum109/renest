@@ -1,6 +1,5 @@
 
-
-import { Prisma } from "@prisma/client";
+import { Prisma } from "../../../generated/prisma";
 import { prisma } from "../../lib/prisma";
 
 const createProperty = async (

@@ -1,4 +1,4 @@
-import { RentalStatus } from "@prisma/client";
+import { RentalStatus } from "../../../generated/prisma";
 export declare const RentalService: {
     createRentalRequest: (payload: any, tenantId: string) => Promise<{
         property: {
@@ -33,8 +33,8 @@ export declare const RentalService: {
         createdAt: Date;
         updatedAt: Date;
         message: string | null;
-        tenantId: string;
         propertyId: string;
+        tenantId: string;
     }>;
     getMyRentalRequests: (tenantId: string) => Promise<({
         property: {
@@ -57,8 +57,8 @@ export declare const RentalService: {
         createdAt: Date;
         updatedAt: Date;
         message: string | null;
-        tenantId: string;
         propertyId: string;
+        tenantId: string;
     })[]>;
     getRentalById: (id: string) => Promise<{
         property: {
@@ -80,11 +80,11 @@ export declare const RentalService: {
             status: import("../../../generated/prisma").$Enums.PaymentStatus;
             createdAt: Date;
             updatedAt: Date;
+            rentalRequestId: string;
             transactionId: string;
             amount: number;
             provider: import("../../../generated/prisma").$Enums.PaymentProvider;
             paidAt: Date | null;
-            rentalRequestId: string;
         }[];
         tenant: {
             id: string;
@@ -104,8 +104,8 @@ export declare const RentalService: {
         createdAt: Date;
         updatedAt: Date;
         message: string | null;
-        tenantId: string;
         propertyId: string;
+        tenantId: string;
     }>;
     getLandlordRequests: (landlordId: string) => Promise<({
         property: {
@@ -140,8 +140,8 @@ export declare const RentalService: {
         createdAt: Date;
         updatedAt: Date;
         message: string | null;
-        tenantId: string;
         propertyId: string;
+        tenantId: string;
     })[]>;
     updateRentalStatus: (id: string, status: RentalStatus) => Promise<{
         id: string;
@@ -149,8 +149,8 @@ export declare const RentalService: {
         createdAt: Date;
         updatedAt: Date;
         message: string | null;
-        tenantId: string;
         propertyId: string;
+        tenantId: string;
     }>;
 };
 //# sourceMappingURL=rental.service.d.ts.map

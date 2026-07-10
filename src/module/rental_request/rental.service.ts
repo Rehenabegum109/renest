@@ -1,4 +1,5 @@
-import { Prisma, RentalStatus } from "@prisma/client";
+
+import {  RentalStatus } from "../../../generated/prisma";
 import { prisma } from "../../lib/prisma";
 
 const createRentalRequest = async (
