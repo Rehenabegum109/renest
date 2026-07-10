@@ -34,7 +34,14 @@ const getAllProperties = catchAsync(async (req: Request, res: Response) => {
 
 const getPropertyById = catchAsync(async (req: Request, res: Response) => {
   const { id } = req.params;
+  
 
+  if (!id) {
+    return res.status(400).json({
+      success: false,
+      message: "Property ID is required",
+    });
+  }
   const result = await PropertyService.getPropertyById(id);
 
   sendResponse(res, {
@@ -47,7 +54,12 @@ const getPropertyById = catchAsync(async (req: Request, res: Response) => {
 
 const updateProperty = catchAsync(async (req: Request, res: Response) => {
   const { id } = req.params;
-
+  if (!id) {
+    return res.status(400).json({
+      success: false,
+      message: "Property ID is required",
+    });
+  }
   const result = await PropertyService.updateProperty(id, req.body);
 
   sendResponse(res, {
@@ -60,6 +72,13 @@ const updateProperty = catchAsync(async (req: Request, res: Response) => {
 
 const deleteProperty = catchAsync(async (req: Request, res: Response) => {
   const { id } = req.params;
+
+  if (!id) {
+    return res.status(400).json({
+      success: false,
+      message: "Property ID is required"
+    });
+  }
 
   const result = await PropertyService.deleteProperty(id);
 

@@ -35,7 +35,15 @@ const getMyRentalRequests = catchAsync(
 
 const getRentalById = catchAsync(
   async (req: Request, res: Response) => {
-    const result = await RentalService.getRentalById(req.params.id);
+       const { id } = req.params;
+
+    if (!id) {
+      return res.status(400).json({
+        success: false,
+        message: "Rental ID is required",
+      });
+    }
+    const result = await RentalService.getRentalById(id);
 
     sendResponse(res, {
       success: true,
@@ -61,8 +69,15 @@ const getLandlordRequests = catchAsync(
 
 const updateRentalStatus = catchAsync(
   async (req: Request, res: Response) => {
+    const {id} = req.params;
+      if (!id) {
+      return res.status(400).json({
+        success: false,
+        message: "Rental ID is required",
+      });
+    }
     const result = await RentalService.updateRentalStatus(
-      req.params.id,
+      id,
       req.body.status
     );
 

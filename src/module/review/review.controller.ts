@@ -28,10 +28,18 @@ sendResponse(res,{
 const getPropertyReviews =
 catchAsync(async(req,res)=>{
 
+  const { propertyId } = req.params;
+
+  if(!propertyId){
+    return res.status(400).json({
+      success:false,
+      message:"Property ID is required"
+    });
+  }
 
 const result =
 await ReviewService.getPropertyReviews(
- req.params.propertyId
+ propertyId
 );
 
 

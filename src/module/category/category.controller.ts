@@ -41,11 +41,16 @@ async (req: Request, res: Response)=>{
 
 const getSingleCategory = catchAsync(
 async(req:Request,res:Response)=>{
+ const { id } = req.params;
 
- const result =
- await CategoryService.getSingleCategory(
-   req.params.id
- );
+ if(!id){
+   return res.status(400).json({
+     success:false,
+     message:"Category ID is required"
+   });
+ }
+
+ const result = await CategoryService.getSingleCategory(id);
 
 
  sendResponse(res,{
@@ -60,10 +65,16 @@ async(req:Request,res:Response)=>{
 
 const updateCategory = catchAsync(
 async(req:Request,res:Response)=>{
+ const { id } = req.params;
 
- const result =
- await CategoryService.updateCategory(
-  req.params.id,
+ if(!id){
+   return res.status(400).json({
+     success:false,
+     message:"Category ID is required"
+   });
+ }
+ const result =await CategoryService.updateCategory(
+  id,
   req.body
  );
 
@@ -80,10 +91,17 @@ async(req:Request,res:Response)=>{
 
 const deleteCategory = catchAsync(
 async(req:Request,res:Response)=>{
+ const { id } = req.params;
 
+ if(!id){
+   return res.status(400).json({
+     success:false,
+     message:"Category ID is required"
+   });
+ }
  const result =
  await CategoryService.deleteCategory(
-  req.params.id
+  id
  );
 
 
