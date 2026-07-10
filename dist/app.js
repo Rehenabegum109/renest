@@ -1,7 +1,7 @@
 import express from "express";
-import globalErrorHandler from "./globalErrorHandler";
-import notFound from "./notFound";
 import router from "./route";
+import globalErrorHandler from "./error/globalErrorHandler";
+import notFound from "./error/notFound";
 const app = express();
 app.use("/api/payments/confirm", express.raw({ type: "application/json" }));
 app.use(express.json());
