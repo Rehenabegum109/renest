@@ -1,8 +1,8 @@
 import express from "express";
-import { PaymentController } from "./payment.controller";
-import { auth } from "../../middleware/auth";
-import { PaymentValidation } from "./payment.validation";
-import { validateRequest } from "../../middleware/validateRequest";
+import { PaymentController } from "./payment.controller.js";
+import { auth } from "../../middleware/auth.js";
+import { PaymentValidation } from "./payment.validation.js";
+import { validateRequest } from "../../middleware/validateRequest.js";
 const router = express.Router();
 router.get("/success", (req, res) => {
     res.send("Payment successful");

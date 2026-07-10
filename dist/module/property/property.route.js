@@ -1,8 +1,8 @@
 import express from "express";
-import { PropertyController } from "./property.controller";
-import { auth } from "../../middleware/auth";
-import { PropertyValidation } from "./property.validation";
-import { validateRequest } from "../../middleware/validateRequest";
+import { PropertyController } from "./property.controller.js";
+import { auth } from "../../middleware/auth.js";
+import { PropertyValidation } from "./property.validation.js";
+import { validateRequest } from "../../middleware/validateRequest.js";
 const router = express.Router();
 // Public
 router.get("/", PropertyController.getAllProperties);

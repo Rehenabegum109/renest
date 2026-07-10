@@ -6,8 +6,8 @@ export declare const AuthValidation: {
             email: z.ZodString;
             password: z.ZodString;
             role: z.ZodEnum<{
-                TENANT: "TENANT";
                 LANDLORD: "LANDLORD";
+                TENANT: "TENANT";
             }>;
             phone: z.ZodOptional<z.ZodString>;
             profileImage: z.ZodOptional<z.ZodString>;

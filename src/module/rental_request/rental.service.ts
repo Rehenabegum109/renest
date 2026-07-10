@@ -1,6 +1,6 @@
 
-import {  RentalStatus } from "../../../generated/prisma";
-import { prisma } from "../../lib/prisma";
+import { RentalStatus } from "../../../generated/prisma/index.js";
+import { prisma } from "../../lib/prisma.js";
 
 const createRentalRequest = async (
   payload: any,

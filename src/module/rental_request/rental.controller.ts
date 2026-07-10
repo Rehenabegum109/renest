@@ -1,8 +1,8 @@
 import httpStatus from "http-status";
 import { Request, Response } from "express";
-import catchAsync from "../../utils/catchAsync";
-import sendResponse from "../../utils/sendResponse";
-import { RentalService } from "./rental.service";
+import catchAsync from "../../utils/catchAsync.js";
+import sendResponse from "../../utils/sendResponse.js";
+import { RentalService } from "./rental.service.js";
 
 const createRentalRequest = catchAsync(
   async (req: Request & { user?: any }, res: Response) => {

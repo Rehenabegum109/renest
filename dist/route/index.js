@@ -1,11 +1,11 @@
 import express from "express";
-import { AuthRoutes } from "../auth/auth.route";
-import { landlordRouter, PropertyRoutes } from "../module/property/property.route";
-import { CategoryRoutes } from "../module/category/category.route";
-import { RentalRoutes } from "../module/rental_request/rental.route";
-import { PaymentRoutes } from "../module/payment/payment.route";
-import { ReviewRoutes } from "../module/review/review.route";
-import { AdminRoutes } from "../module/admin/admin.route";
+import { AuthRoutes } from "../auth/auth.route.js";
+import { landlordRouter, PropertyRoutes } from "../module/property/property.route.js";
+import { CategoryRoutes } from "../module/category/category.route.js";
+import { RentalRoutes } from "../module/rental_request/rental.route.js";
+import { PaymentRoutes } from "../module/payment/payment.route.js";
+import { ReviewRoutes } from "../module/review/review.route.js";
+import { AdminRoutes } from "../module/admin/admin.route.js";
 const router = express.Router();
 router.use("/auth", AuthRoutes);
 router.use("/properties", PropertyRoutes);

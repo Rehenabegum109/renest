@@ -1,4 +1,4 @@
-import { AdminService } from "./admin.service";
+import { AdminService } from "./admin.service.js";
 const getAllUsers = async (req, res) => {
     const result = await AdminService.getAllUsers();
     res.status(200).json({

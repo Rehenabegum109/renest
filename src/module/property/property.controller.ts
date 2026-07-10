@@ -3,9 +3,9 @@
 import httpStatus from "http-status";
 import { Request, Response } from "express";
 
-import { PropertyService } from "./property.service";
-import catchAsync from "../../utils/catchAsync";
-import sendResponse from "../../utils/sendResponse";
+import { PropertyService } from "./property.service.js";
+import catchAsync from "../../utils/catchAsync.js";
+import sendResponse from "../../utils/sendResponse.js";
 
 const createProperty = catchAsync(async (req: Request & { user?: any }, res: Response) => { 
   const result = await PropertyService.createProperty(

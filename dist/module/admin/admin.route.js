@@ -1,8 +1,8 @@
 import express from "express";
-import { AdminController } from "./admin.controller";
-import { auth } from "../../middleware/auth";
-import { AdminValidation } from "./admin.validation";
-import { validateRequest } from "../../middleware/validateRequest";
+import { AdminController } from "./admin.controller.js";
+import { auth } from "../../middleware/auth.js";
+import { AdminValidation } from "./admin.validation.js";
+import { validateRequest } from "../../middleware/validateRequest.js";
 const router = express.Router();
 router.get("/users", auth("ADMIN"), AdminController.getAllUsers);
 router.patch("/users/:id", auth("ADMIN"), validateRequest(AdminValidation.updateUserStatusValidation), AdminController.updateUserStatus);

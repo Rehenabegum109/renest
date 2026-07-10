@@ -1,10 +1,10 @@
 import httpStatus from "http-status";
 import { Request, Response } from "express";
-import catchAsync from "../../utils/catchAsync";
-import sendResponse from "../../utils/sendResponse";
-import { PaymentService } from "./payment.service";
-import { stripe } from "../../config";
-import config from "../../config";
+import catchAsync from "../../utils/catchAsync.js";
+import sendResponse from "../../utils/sendResponse.js";
+import { PaymentService } from "./payment.service.js";
+import { stripe } from "../../config/index.js";
+import config from "../../config/index.js";
 
 
 

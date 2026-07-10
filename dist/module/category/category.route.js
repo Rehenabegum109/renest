@@ -1,8 +1,8 @@
 import express from "express";
-import { CategoryController } from "./category.controller";
-import { auth } from "../../middleware/auth";
-import { CategoryValidation } from "./category.validation";
-import { validateRequest } from "../../middleware/validateRequest";
+import { CategoryController } from "./category.controller.js";
+import { auth } from "../../middleware/auth.js";
+import { CategoryValidation } from "./category.validation.js";
+import { validateRequest } from "../../middleware/validateRequest.js";
 const router = express.Router();
 // Public
 router.get("/", CategoryController.getAllCategories);

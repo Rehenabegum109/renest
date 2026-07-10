@@ -1,8 +1,8 @@
 import express from "express";
-import { ReviewController } from "./review.controller";
-import { auth } from "../../middleware/auth";
-import { ReviewValidation } from "./review.validation";
-import { validateRequest } from "../../middleware/validateRequest";
+import { ReviewController } from "./review.controller.js";
+import { auth } from "../../middleware/auth.js";
+import { ReviewValidation } from "./review.validation.js";
+import { validateRequest } from "../../middleware/validateRequest.js";
 
 
 const router = express.Router();

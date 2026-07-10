@@ -1,8 +1,8 @@
 import express from "express";
-import { auth } from "../../middleware/auth";
-import { RentalController } from "./rental.controller";
-import { RentalValidation } from "./rental.validation";
-import { validateRequest } from "../../middleware/validateRequest";
+import { auth } from "../../middleware/auth.js";
+import { RentalController } from "./rental.controller.js";
+import { RentalValidation } from "./rental.validation.js";
+import { validateRequest } from "../../middleware/validateRequest.js";
 const router = express.Router();
 // Tenant
 router.post("/", auth("TENANT"), validateRequest(RentalValidation.createRentalValidation), RentalController.createRentalRequest);

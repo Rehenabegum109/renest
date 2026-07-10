@@ -1,7 +1,6 @@
 
-import { Prisma } from "../../../generated/prisma";
-import { prisma } from "../../lib/prisma";
-
+import { prisma } from "../../lib/prisma.js";
+import { Prisma } from "../../../generated/prisma/index.js";
 const createProperty = async (
   payload: any,
   landlordId: string
@@ -139,9 +138,25 @@ const getPropertyById = async (id: string) => {
   });
 };
 
+// const updateProperty = async (
+//   id: string,
+//   payload: typeof prisma.property.update
+// ) => {
+//   return await prisma.property.update({
+//     where: {
+//       id,
+//     },
+//     data: payload,
+//     include: {
+//       landlord: true,
+//       category: true,
+//     },
+//   });
+// };
+
 const updateProperty = async (
   id: string,
-  payload: Prisma.PropertyUpdateInput
+  payload: any
 ) => {
   return await prisma.property.update({
     where: {
@@ -154,10 +169,9 @@ const updateProperty = async (
     },
   });
 };
-
 const deleteProperty = async (id: string) => {
 
-  // delete reviews first
+
   await prisma.review.deleteMany({
     where: {
       propertyId: id,
