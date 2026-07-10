@@ -1,20 +1,14 @@
 model Payment {
-  id                String   @id @default(cuid())
+  id              String          @id @default(cuid())
+  rentalRequestId String
+  transactionId   String          @unique
+  amount          Float
+  provider        PaymentProvider
+  status          PaymentStatus   @default(PENDING)
+  paidAt          DateTime?
+  createdAt       DateTime        @default(now())
+  updatedAt       DateTime        @updatedAt
+  rentalRequest   RentalRequest   @relation(fields: [rentalRequestId], references: [id])
 
-  rentalRequestId   String
-  rentalRequest     RentalRequest @relation(fields: [rentalRequestId], references: [id])
-
-  transactionId     String   @unique
-
-  amount            Float
-
-  provider          PaymentProvider
-
-  status            PaymentStatus @default(PENDING)
-
-  paidAt            DateTime?
-
-  createdAt         DateTime @default(now())
-  updatedAt         DateTime @updatedAt
-   @@map("payments")
+  @@map("payments")
 }

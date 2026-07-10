@@ -1,0 +1,192 @@
+// import httpStatus from "http-status";
+
+// import catchAsync from "../../utils/catchAsync";
+// import sendResponse from "../../utils/sendResponse";
+// import { PaymentService } from "./payment.service";
+// import config, { stripe } from "../../config";
+// import { Request, Response } from "express";
+// const createCheckoutSession = catchAsync(async (req, res) => {
+//   const result = await PaymentService.createCheckoutSession(
+//     req.body.rentalRequestId,
+//     req.user.id
+//   );
+
+//   sendResponse(res, {
+//     success: true,
+//     statusCode: httpStatus.OK,
+//     message: "Checkout session created successfully",
+//     data: result,
+//   });
+// });
+
+// const getMyPayments = catchAsync(async (req, res) => {
+//   const result = await PaymentService.getMyPayments(req.user.id);
+
+//   sendResponse(res, {
+//     success: true,
+//     statusCode: httpStatus.OK,
+//     message: "Payments retrieved successfully",
+//     data: result,
+//   });
+// });
+
+// const getPaymentById = catchAsync(async (req, res) => {
+//   const result = await PaymentService.getPaymentById(req.params.id);
+
+//   sendResponse(res, {
+//     success: true,
+//     statusCode: httpStatus.OK,
+//     message: "Payment retrieved successfully",
+//     data: result,
+//   });
+// });
+
+// const stripeWebhook = async (req: Request, res: Response) => {
+//   const signature = req.headers["stripe-signature"] as string;
+
+//   try {
+//     const event = stripe.webhooks.constructEvent(
+//       req.body,
+//       signature,
+//       config.stripe_webhook_secret as string
+//     );
+
+//     await PaymentService.handleStripeWebhook(event);
+
+//     res.status(200).json({
+//       received: true,
+//     });
+//   } catch (error) {
+//     res.status(400).json({
+//       success: false,
+//       message: "Webhook Error",
+//     });
+//   }
+// };
+// export const PaymentController = {
+//   createCheckoutSession,
+//   getMyPayments,
+//   getPaymentById,
+//   stripeWebhook,
+// };
+
+
+import httpStatus from "http-status";
+import { Request, Response } from "express";
+import catchAsync from "../../utils/catchAsync";
+import sendResponse from "../../utils/sendResponse";
+import { PaymentService } from "./payment.service";
+import { stripe } from "../../config";
+import config from "../../config";
+
+
+
+const createCheckoutSession = catchAsync(async(req,res)=>{
+
+ const result =
+ await PaymentService.createCheckoutSession(
+   req.body.rentalRequestId,
+   req.user.id
+ );
+
+
+ sendResponse(res,{
+   success:true,
+   statusCode:httpStatus.OK,
+   message:"Checkout session created",
+   data:result
+ });
+
+
+});
+
+
+
+
+const getMyPayments = catchAsync(async(req,res)=>{
+
+
+ const result =
+ await PaymentService.getMyPayments(
+   req.user.id
+ );
+
+
+ sendResponse(res,{
+  success:true,
+  statusCode:httpStatus.OK,
+  message:"Payments retrieved",
+  data:result
+ });
+
+
+});
+
+
+
+
+
+const getPaymentById = catchAsync(async(req,res)=>{
+
+
+ const result =
+ await PaymentService.getPaymentById(
+   req.params.id
+ );
+
+
+ sendResponse(res,{
+  success:true,
+  statusCode:httpStatus.OK,
+  message:"Payment retrieved",
+  data:result
+ });
+
+
+});
+
+
+
+
+const stripeWebhook = async (req: Request, res: Response) => {
+  const signature = req.headers["stripe-signature"] as string;
+
+  try {
+    const event = stripe.webhooks.constructEvent(
+      req.body,
+      signature,
+      config.stripe_webhook_secret as string
+    );
+
+    console.log("Stripe Event:", event.type);
+
+    await PaymentService.handleStripeWebhook(event);
+
+    console.log("Webhook Success");
+
+    res.status(200).json({
+      received: true,
+    });
+
+  } catch (error: any) {
+
+    console.log("Webhook Failed:", error);
+
+    res.status(400).json({
+      message: "Webhook error",
+      error: error.message,
+    });
+  }
+};
+
+
+
+
+export const PaymentController={
+
+ createCheckoutSession,
+ getMyPayments,
+ getPaymentById,
+ stripeWebhook
+
+};
