@@ -76,10 +76,10 @@ const createCheckoutSession = async (
 
 
     success_url:
-      `${process.env.BACKEND_URL}/api/payments/success`,
+      `${process.env.APP_URL}/api/payments/success`,
 
     cancel_url:
-      `${process.env.BACKEND_URL}/api/payments/cancel`,
+      `${process.env.APP_URL}/api/payments/cancel`,
   });
 
 
