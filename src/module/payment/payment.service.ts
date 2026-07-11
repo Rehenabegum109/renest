@@ -3,7 +3,7 @@ import httpStatus from "http-status";
 import Stripe from "stripe";
 import { prisma } from "../../lib/prisma.js";
 import AppError from "../../utils/appError.js";
-import { stripe } from "../../config/index.js";
+import config, { stripe } from "../../config/index.js";
 
 
 const createCheckoutSession = async (
@@ -75,11 +75,9 @@ const createCheckoutSession = async (
     },
 
 
-    success_url:
-      `${process.env.APP_URL}/api/payments/success`,
+    success_url:`${config.app_url}/api/payments/success`,
 
-    cancel_url:
-      `${process.env.APP_URL}/api/payments/cancel`,
+    cancel_url:`${config.app_url}/api/payments/cancel`,
   });
 
 
