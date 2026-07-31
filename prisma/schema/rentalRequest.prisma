@@ -1,14 +1,1 @@
-model RentalRequest {
-  id         String       @id @default(cuid())
-  tenantId   String
-  propertyId String
-  message    String?
-  status     RentalStatus @default(PENDING)
-  createdAt  DateTime     @default(now())
-  updatedAt  DateTime     @updatedAt
-  payments   Payment[]
-  property   Property     @relation(fields: [propertyId], references: [id])
-  tenant     User         @relation(fields: [tenantId], references: [id])
 
-  @@map("rental_requests")
-}
