@@ -3,6 +3,7 @@ import dotenv from "dotenv";
 dotenv.config();
 const config = {
     port: process.env.PORT || 5000,
+    app_url: process.env.APP_URL,
     database_url: process.env.DATABASE_URL,
     jwt_secret: process.env.JWT_SECRET,
     jwt_access_expires_in: process.env.JWT_ACCESS_EXPIRES_IN || "7d",

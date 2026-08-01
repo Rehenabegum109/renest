@@ -4,10 +4,8 @@ export declare const AuthService: {
         name: string;
         email: string;
         password: string;
-        phone: string | null;
-        profileImage: string | null;
+        activeStatus: import("../../generated/prisma/index.js").$Enums.ActiveStatus;
         role: import("../../generated/prisma/index.js").$Enums.Role;
-        status: import("../../generated/prisma/index.js").$Enums.UserStatus;
         createdAt: Date;
         updatedAt: Date;
     }>;
@@ -18,10 +16,8 @@ export declare const AuthService: {
             name: string;
             email: string;
             password: string;
-            phone: string | null;
-            profileImage: string | null;
+            activeStatus: import("../../generated/prisma/index.js").$Enums.ActiveStatus;
             role: import("../../generated/prisma/index.js").$Enums.Role;
-            status: import("../../generated/prisma/index.js").$Enums.UserStatus;
             createdAt: Date;
             updatedAt: Date;
         };
@@ -30,8 +26,8 @@ export declare const AuthService: {
         id: string;
         name: string;
         email: string;
+        activeStatus: import("../../generated/prisma/index.js").$Enums.ActiveStatus;
         role: import("../../generated/prisma/index.js").$Enums.Role;
-        status: import("../../generated/prisma/index.js").$Enums.UserStatus;
         createdAt: Date;
     }>;
 };

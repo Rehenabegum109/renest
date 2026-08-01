@@ -1,7 +1,7 @@
 import httpStatus from "http-status";
 import { prisma } from "../../lib/prisma.js";
 import AppError from "../../utils/appError.js";
-import { stripe } from "../../config/index.js";
+import config, { stripe } from "../../config/index.js";
 const createCheckoutSession = async (rentalRequestId, userId) => {
     const rentalRequest = await prisma.rentalRequest.findUnique({
         where: {
@@ -39,8 +39,8 @@ const createCheckoutSession = async (rentalRequestId, userId) => {
         metadata: {
             rentalRequestId: rentalRequest.id,
         },
-        success_url: `${process.env.BACKEND_URL}/api/payments/success`,
-        cancel_url: `${process.env.BACKEND_URL}/api/payments/cancel`,
+        success_url: `${config.app_url}/api/payments/success`,
+        cancel_url: `${config.app_url}/api/payments/cancel`,
     });
     await prisma.payment.create({
         data: {

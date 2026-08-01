@@ -4,7 +4,7 @@ import config from "../config/index.js";
 import { prisma } from "../lib/prisma.js";
 const registerUser = async (payload) => {
     const { name, email, password, role } = payload;
-    const existingUser = await prisma.user.findUnique({
+    const existingUser = await prisma.users.findUnique({
         where: {
             email
         }
@@ -13,19 +13,21 @@ const registerUser = async (payload) => {
         throw new Error("User already exists");
     }
     const hashedPassword = await bcrypt.hash(password, 10);
-    const user = await prisma.user.create({
+    const user = await prisma.users.create({
         data: {
             name,
             email,
             password: hashedPassword,
-            role
-        }
+            role,
+        },
     });
+    console.log("Created User:", user);
+    return user;
     return user;
 };
 const loginUser = async (payload) => {
     const { email, password } = payload;
-    const user = await prisma.user.findUnique({
+    const user = await prisma.users.findUnique({
         where: {
             email
         }
@@ -49,7 +51,7 @@ const loginUser = async (payload) => {
     };
 };
 const getMe = async (userId) => {
-    const user = await prisma.user.findUnique({
+    const user = await prisma.users.findUnique({
         where: {
             id: userId
         },
@@ -58,7 +60,7 @@ const getMe = async (userId) => {
             name: true,
             email: true,
             role: true,
-            status: true,
+            activeStatus: true,
             createdAt: true
         }
     });

@@ -1,6 +1,7 @@
 import Stripe from "stripe";
 declare const config: {
     port: string | number;
+    app_url: string | undefined;
     database_url: string | undefined;
     jwt_secret: string;
     jwt_access_expires_in: string;

@@ -2,7 +2,12 @@ import express from "express";
 import globalErrorHandler from "./error/globalErrorHandler.js";
 import notFound from "./error/notFound.js";
 import router from "./route/index.js";
+import cors from "cors";
 const app = express();
+app.use(cors({
+    origin: "http://localhost:3000",
+    credentials: true,
+}));
 app.use("/api/payments/confirm", express.raw({ type: "application/json" }));
 app.use(express.json());
 app.get("/", (req, res) => {
