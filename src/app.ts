@@ -6,14 +6,15 @@ import cors from "cors";
 import cookieParser from "cookie-parser";
 
 const app = express();
-
 app.use(
   cors({
-    origin: "http://localhost:3000",
+    origin: [
+      "http://localhost:3000",
+      "https://renest-client.vercel.app",
+    ],
     credentials: true,
   })
 );
-
 app.use(
   "/api/payments/confirm",
   express.raw({ type: "application/json" })
