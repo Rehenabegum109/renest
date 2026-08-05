@@ -1,0 +1,163 @@
+model Category {
+  id   String @id @default(cuid())
+  name String @unique
+
+  properties Property[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+enum Role {
+  TENANT
+  LANDLORD
+  ADMIN
+}
+
+enum UserStatus {
+  ACTIVE
+  BLOCKED
+}
+
+enum PropertyStatus {
+  AVAILABLE
+  RENTED
+}
+
+enum RentalStatus {
+  PENDING
+  APPROVED
+  REJECTED
+  ACTIVE
+  COMPLETED
+}
+
+enum PaymentStatus {
+  PENDING
+  COMPLETED
+  FAILED
+}
+
+enum PaymentProvider {
+  STRIPE
+  SSLCOMMERZ
+}
+
+model Payment {
+  id String @id @default(cuid())
+
+  rentalRequestId String @unique
+
+  amount Float
+
+  transactionId String? @unique
+
+  provider PaymentProvider
+
+  status PaymentStatus @default(PENDING)
+
+  paidAt DateTime?
+
+  rentalRequest RentalRequest @relation(fields: [rentalRequestId], references: [id], onDelete: Cascade)
+
+  userId String
+
+  user User @relation(fields: [userId], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Property {
+  id String @id @default(cuid())
+
+  title       String
+  description String
+
+  address String
+  city    String
+
+  rent      Float
+  bedrooms  Int
+  bathrooms Int
+
+  image String?
+
+  status PropertyStatus @default(AVAILABLE)
+
+  landlordId String
+  categoryId String
+
+  landlord User     @relation(fields: [landlordId], references: [id], onDelete: Cascade)
+  category Category @relation(fields: [categoryId], references: [id])
+
+  rentalRequests RentalRequest[]
+  reviews        Review[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model RentalRequest {
+  id         String @id @default(cuid())
+  tenantId   String
+  propertyId String
+
+  moveInDate DateTime?
+
+  status RentalStatus @default(PENDING)
+
+  tenant   User     @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  property Property @relation(fields: [propertyId], references: [id], onDelete: Cascade)
+
+  payment Payment?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Review {
+  id String @id @default(cuid())
+
+  rating Int
+
+  comment String
+
+  userId String
+
+  propertyId String
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  property Property @relation(fields: [propertyId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model User {
+  id       String     @id @default(cuid())
+  name     String
+  email    String     @unique
+  password String
+  phone    String?
+  role     Role
+  status   UserStatus @default(ACTIVE)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  properties     Property[]
+  rentalRequests RentalRequest[]
+  reviews        Review[]
+  payments       Payment[]
+}
