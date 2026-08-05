@@ -10,7 +10,6 @@ const getAllUsers = async () => {
       name: true,
       email: true,
       phone: true,
-      profileImage: true,
       role: true,
       status: true,
       createdAt: true,
@@ -52,11 +51,15 @@ const getAllProperties = async () => {
 };
 
 const getAllRentalRequests = async () => {
+
   return await prisma.rentalRequest.findMany({
+
     orderBy: {
       createdAt: "desc",
     },
+
     include: {
+
       tenant: {
         select: {
           id: true,
@@ -64,22 +67,78 @@ const getAllRentalRequests = async () => {
           email: true,
         },
       },
+
+
       property: {
         select: {
           id: true,
           title: true,
-          location: true,
-          rentPrice: true,
+          address: true,
+          city: true,
+          rent: true,
+          status: true,
         },
       },
-      payments: true,
+
+
+      payment: true,
+
+    },
+
+  });
+
+};
+
+const getDashboardStats = async () => {
+  const totalUsers = await prisma.user.count();
+
+  const totalProperties = await prisma.property.count();
+
+  const totalRentals = await prisma.rentalRequest.count();
+
+  const totalPayments = await prisma.payment.count();
+
+  return {
+    totalUsers,
+    totalProperties,
+    totalRentals,
+    totalPayments,
+  };
+};
+
+const deleteProperty = async (id: string) => {
+  await prisma.review.deleteMany({
+    where: {
+      propertyId: id,
+    },
+  });
+
+  await prisma.payment.deleteMany({
+    where: {
+      rentalRequest: {
+        propertyId: id,
+      },
+    },
+  });
+
+  await prisma.rentalRequest.deleteMany({
+    where: {
+      propertyId: id,
+    },
+  });
+
+  return await prisma.property.delete({
+    where: {
+      id,
     },
   });
 };
 
 export const AdminService = {
+  getDashboardStats,
   getAllUsers,
   updateUserStatus,
   getAllProperties,
   getAllRentalRequests,
+  deleteProperty,
 };

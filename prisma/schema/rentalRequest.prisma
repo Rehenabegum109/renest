@@ -1,17 +1,14 @@
-
 model RentalRequest {
-  id String @id @default(cuid())
-
-  tenantId String
+  id         String   @id @default(cuid())
+  tenantId   String
   propertyId String
 
-  moveInDate DateTime
+  moveInDate DateTime? 
 
   status RentalStatus @default(PENDING)
 
-  tenant User @relation(fields:[tenantId], references:[id], onDelete: Cascade)
-
-  property Property @relation(fields:[propertyId], references:[id], onDelete: Cascade)
+  tenant   User     @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  property Property @relation(fields: [propertyId], references: [id], onDelete: Cascade)
 
   payment Payment?
 

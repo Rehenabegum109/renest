@@ -1,24 +1,45 @@
 
-import { RentalStatus } from "../../../generated/prisma/index.js";
+
+import { PropertyStatus, RentalStatus } from "../../../generated/prisma/index.js";
 import { prisma } from "../../lib/prisma.js";
 
 const createRentalRequest = async (
-  payload: any,
+  payload: {
+    propertyId: string;
+    moveInDate: string;
+  },
   tenantId: string
 ) => {
-  const property = await prisma.property.findUniqueOrThrow({
+  // Check property exists
+  const property = await prisma.property.findUnique({
     where: {
       id: payload.propertyId,
     },
   });
 
-  if (!property.isAvailable) {
-    throw new Error("Property is not available");
+  if (!property) {
+    throw new Error("Property not found");
   }
 
+ if (property.status !== PropertyStatus.AVAILABLE) {
+  throw new Error("Property is not available");
+}
+
+  // Prevent duplicate request
+  const existingRequest = await prisma.rentalRequest.findFirst({
+    where: {
+      tenantId,
+      propertyId: payload.propertyId,
+    },
+  });
+
+  if (existingRequest) {
+    throw new Error("You have already requested this property.");
+  }
+
+  // Create rental request
   const rental = await prisma.rentalRequest.create({
     data: {
-      message: payload.message,
       tenant: {
         connect: {
           id: tenantId,
@@ -29,6 +50,8 @@ const createRentalRequest = async (
           id: payload.propertyId,
         },
       },
+      moveInDate: new Date(payload.moveInDate),
+      status: RentalStatus.PENDING,
     },
     include: {
       tenant: true,
@@ -38,6 +61,7 @@ const createRentalRequest = async (
 
   return rental;
 };
+
 const getMyRentalRequests = async (tenantId: string) => {
   return await prisma.rentalRequest.findMany({
     where: {
@@ -60,7 +84,7 @@ const getRentalById = async (id: string) => {
     include: {
       tenant: true,
       property: true,
-      payments: true,
+      payment: true,
     },
   });
 };
@@ -96,10 +120,13 @@ const updateRentalStatus = async (
   });
 };
 
+
+
 export const RentalService = {
   createRentalRequest,
   getMyRentalRequests,
   getRentalById,
   getLandlordRequests,
   updateRentalStatus,
+
 };

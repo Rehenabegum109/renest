@@ -1,6 +1,22 @@
 import { Request, Response } from "express";
 import { AdminService } from "./admin.service.js";
 
+
+const getDashboardStats = async (
+  req: Request,
+  res: Response
+) => {
+  const result = await AdminService.getDashboardStats();
+
+  res.status(200).json({
+    success: true,
+    message: "Dashboard stats fetched successfully",
+    data: result,
+  });
+};
+
+
+
 const getAllUsers = async (req: Request, res: Response) => {
   const result = await AdminService.getAllUsers();
 
@@ -49,10 +65,22 @@ const getAllRentalRequests = async (req: Request, res: Response) => {
     data: result,
   });
 };
+const deleteProperty = async (req: Request, res: Response) => {
+  const { id } = req.params;
 
+  const result = await AdminService.deleteProperty(id);
+
+  res.status(200).json({
+    success: true,
+    message: "Property deleted successfully",
+    data: result,
+  });
+};
 export const AdminController = {
   getAllUsers,
   updateUserStatus,
   getAllProperties,
   getAllRentalRequests,
+  getDashboardStats,
+  deleteProperty,
 };

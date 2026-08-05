@@ -4,43 +4,46 @@ import jwt from "jsonwebtoken";
 import config from "../config/index.js";
 import { prisma } from "../lib/prisma.js";
 
+const registerUser = async (payload: any) => {
+  const { name, email, password, role } = payload;
 
-const registerUser = async (payload:any)=>{
+  const existingUser = await prisma.user.findUnique({
+    where: {
+      email,
+    },
+  });
 
-    const {name,email,password,role}=payload;
+  if (existingUser) {
+    throw new Error("User already exists");
+  }
 
+  const hashedPassword = await bcrypt.hash(password, 10);
 
-    const existingUser = await prisma.user.findUnique({
-        where:{
-            email
-        }
-    });
+  const user = await prisma.user.create({
+    data: {
+      name,
+      email,
+      password: hashedPassword,
+      role,
+    },
+  });
 
-
-    if(existingUser){
-        throw new Error("User already exists");
+  const token = jwt.sign(
+    {
+      id: user.id,
+      role: user.role,
+    },
+    config.jwt_secret,
+    {
+      expiresIn: "7d",
     }
+  );
 
-
-    const hashedPassword = await bcrypt.hash(password,10);
-
-
-    const user = await prisma.user.create({
-  data: {
-    name,
-    email,
-    password: hashedPassword,
-    role,
-  },
-});
-
-console.log("Created User:", user);
-
-return user;
-
-
-    return user;
-}
+  return {
+    token,
+    user,
+  };
+};
 
 
 
@@ -89,30 +92,27 @@ const loginUser = async(payload:any)=>{
         user
     };
 }
- const getMe = async (userId:string)=>{
+const getMe = async (userId: string) => {
+  const user = await prisma.user.findUnique({
+    where: {
+      id: userId,
+    },
+    select: {
+      id: true,
+      name: true,
+      email: true,
+      role: true,
+      status: true,      
+      createdAt: true,
+    },
+  });
 
-    const user = await prisma.user.findUnique({
-        where:{
-            id:userId
-        },
-        select:{
-            id:true,
-            name:true,
-            email:true,
-            role:true,
-           activeStatus:true,
-            createdAt:true
-        }
-    });
+  if (!user) {
+    throw new Error("User not found");
+  }
 
-
-    if(!user){
-        throw new Error("User not found");
-    }
-
-
-    return user;
-}
+  return user;
+};
 
 
 export const AuthService={

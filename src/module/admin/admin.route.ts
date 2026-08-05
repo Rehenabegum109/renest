@@ -7,6 +7,11 @@ import { validateRequest } from "../../middleware/validateRequest.js";
 const router = express.Router();
 
 router.get(
+  "/dashboard",
+  auth("ADMIN"),
+  AdminController.getDashboardStats
+);
+router.get(
   "/users",
   auth("ADMIN"),
   AdminController.getAllUsers
@@ -27,6 +32,11 @@ router.get(
   "/rentals",
   auth("ADMIN"),
   AdminController.getAllRentalRequests
+);
+router.delete(
+  "/properties/:id",
+  auth("ADMIN"),
+  AdminController.deleteProperty
 );
 
 export const AdminRoutes = router;

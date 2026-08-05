@@ -3,6 +3,7 @@ import { Request, Response } from "express";
 import catchAsync from "../../utils/catchAsync.js";
 import sendResponse from "../../utils/sendResponse.js";
 import { RentalService } from "./rental.service.js";
+import { PropertyService } from "../property/property.service.js";
 
 const createRentalRequest = catchAsync(
   async (req: Request & { user?: any }, res: Response) => {
@@ -90,10 +91,12 @@ const updateRentalStatus = catchAsync(
   }
 );
 
+
 export const RentalController = {
   createRentalRequest,
   getMyRentalRequests,
   getRentalById,
   getLandlordRequests,
   updateRentalStatus,
+ 
 };
