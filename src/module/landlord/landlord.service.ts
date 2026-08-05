@@ -1,8 +1,9 @@
+import { PaymentStatus, RentalStatus } from "@prisma/client";
 import { prisma } from "../../lib/prisma.js";
-import {
-  RentalStatus,
-  PaymentStatus,
-} from "../../../generated/prisma/index.js";
+// import {
+//   RentalStatus,
+//   PaymentStatus,
+// } from "../../../generated/prisma/index.js";
 
 const getDashboardStats = async (landlordId: string) => {
   const totalProperties = await prisma.property.count({
