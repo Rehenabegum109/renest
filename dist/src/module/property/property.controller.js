@@ -68,11 +68,21 @@ const deleteProperty = catchAsync(async (req, res) => {
         data: result,
     });
 });
+const getMyProperties = catchAsync(async (req, res) => {
+    const result = await PropertyService.getMyProperties(req.user.id);
+    sendResponse(res, {
+        success: true,
+        statusCode: 200,
+        message: "My properties retrieved successfully",
+        data: result,
+    });
+});
 export const PropertyController = {
     createProperty,
     getAllProperties,
     getPropertyById,
     updateProperty,
     deleteProperty,
+    getMyProperties,
 };
 //# sourceMappingURL=property.controller.js.map

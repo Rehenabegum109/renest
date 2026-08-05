@@ -1,5 +1,23 @@
 export declare const PropertyService: {
     createProperty: (payload: any, landlordId: string) => Promise<{
+        landlord: {
+            id: string;
+            role: import("../../../generated/prisma/index.js").$Enums.Role;
+            name: string;
+            email: string;
+            password: string;
+            phone: string | null;
+            status: import("../../../generated/prisma/index.js").$Enums.UserStatus;
+            createdAt: Date;
+            updatedAt: Date;
+        };
+        category: {
+            id: string;
+            name: string;
+            createdAt: Date;
+            updatedAt: Date;
+        };
+    } & {
         id: string;
         status: import("../../../generated/prisma/index.js").$Enums.PropertyStatus;
         createdAt: Date;
@@ -24,11 +42,11 @@ export declare const PropertyService: {
         data: ({
             landlord: {
                 id: string;
+                role: import("../../../generated/prisma/index.js").$Enums.Role;
                 name: string;
                 email: string;
                 password: string;
                 phone: string | null;
-                role: import("../../../generated/prisma/index.js").$Enums.Role;
                 status: import("../../../generated/prisma/index.js").$Enums.UserStatus;
                 createdAt: Date;
                 updatedAt: Date;
@@ -57,22 +75,13 @@ export declare const PropertyService: {
         })[];
     }>;
     getPropertyById: (id: string) => Promise<{
-        reviews: {
-            id: string;
-            createdAt: Date;
-            updatedAt: Date;
-            propertyId: string;
-            userId: string;
-            rating: number;
-            comment: string;
-        }[];
         landlord: {
             id: string;
+            role: import("../../../generated/prisma/index.js").$Enums.Role;
             name: string;
             email: string;
             password: string;
             phone: string | null;
-            role: import("../../../generated/prisma/index.js").$Enums.Role;
             status: import("../../../generated/prisma/index.js").$Enums.UserStatus;
             createdAt: Date;
             updatedAt: Date;
@@ -99,14 +108,30 @@ export declare const PropertyService: {
         landlordId: string;
         categoryId: string;
     }>;
+    getMyProperties: (landlordId: string) => Promise<{
+        id: string;
+        status: import("../../../generated/prisma/index.js").$Enums.PropertyStatus;
+        createdAt: Date;
+        updatedAt: Date;
+        title: string;
+        description: string;
+        address: string;
+        city: string;
+        rent: number;
+        bedrooms: number;
+        bathrooms: number;
+        image: string | null;
+        landlordId: string;
+        categoryId: string;
+    }[]>;
     updateProperty: (id: string, payload: any) => Promise<{
         landlord: {
             id: string;
+            role: import("../../../generated/prisma/index.js").$Enums.Role;
             name: string;
             email: string;
             password: string;
             phone: string | null;
-            role: import("../../../generated/prisma/index.js").$Enums.Role;
             status: import("../../../generated/prisma/index.js").$Enums.UserStatus;
             createdAt: Date;
             updatedAt: Date;

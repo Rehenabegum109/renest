@@ -1,8 +1,8 @@
 
-import { Prisma } from "@prisma/client";
+
 import { prisma } from "../../lib/prisma.js";
 
-
+import { Prisma } from "../../../generated/prisma/client.js";
 const createProperty = async (
   payload: any,
   landlordId: string

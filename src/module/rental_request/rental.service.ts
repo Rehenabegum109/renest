@@ -2,7 +2,7 @@
 
 // import { PropertyStatus, RentalStatus } from "../../../generated/prisma/index.js";
 import { prisma } from "../../lib/prisma.js";
-import { PropertyStatus, RentalStatus } from "@prisma/client";
+import { PropertyStatus, RentalStatus } from "../../../generated/prisma/client.js";
 const createRentalRequest = async (
   payload: {
     propertyId: string;

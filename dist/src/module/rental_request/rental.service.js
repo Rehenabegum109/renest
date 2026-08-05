@@ -1,16 +1,32 @@
+// import { PropertyStatus, RentalStatus } from "../../../generated/prisma/index.js";
 import { prisma } from "../../lib/prisma.js";
+import { PropertyStatus, RentalStatus } from "../../../generated/prisma/client.js";
 const createRentalRequest = async (payload, tenantId) => {
-    const property = await prisma.property.findUniqueOrThrow({
+    // Check property exists
+    const property = await prisma.property.findUnique({
         where: {
             id: payload.propertyId,
         },
     });
-    if (!property.isAvailable) {
+    if (!property) {
+        throw new Error("Property not found");
+    }
+    if (property.status !== PropertyStatus.AVAILABLE) {
         throw new Error("Property is not available");
     }
+    // Prevent duplicate request
+    const existingRequest = await prisma.rentalRequest.findFirst({
+        where: {
+            tenantId,
+            propertyId: payload.propertyId,
+        },
+    });
+    if (existingRequest) {
+        throw new Error("You have already requested this property.");
+    }
+    // Create rental request
     const rental = await prisma.rentalRequest.create({
         data: {
-            message: payload.message,
             tenant: {
                 connect: {
                     id: tenantId,
@@ -21,6 +37,8 @@ const createRentalRequest = async (payload, tenantId) => {
                     id: payload.propertyId,
                 },
             },
+            moveInDate: new Date(payload.moveInDate),
+            status: RentalStatus.PENDING,
         },
         include: {
             tenant: true,
@@ -50,7 +68,7 @@ const getRentalById = async (id) => {
         include: {
             tenant: true,
             property: true,
-            payments: true,
+            payment: true,
         },
     });
 };

@@ -68,6 +68,13 @@ const getAllRentalRequests = async (req: Request, res: Response) => {
 const deleteProperty = async (req: Request, res: Response) => {
   const { id } = req.params;
 
+  if (!id) {
+    return res.status(400).json({
+      success: false,
+      message: "Property ID required",
+    });
+  }
+
   const result = await AdminService.deleteProperty(id);
 
   res.status(200).json({

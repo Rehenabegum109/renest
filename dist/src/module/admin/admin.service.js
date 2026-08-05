@@ -9,7 +9,6 @@ const getAllUsers = async () => {
             name: true,
             email: true,
             phone: true,
-            profileImage: true,
             role: true,
             status: true,
             createdAt: true,
@@ -61,18 +60,58 @@ const getAllRentalRequests = async () => {
                 select: {
                     id: true,
                     title: true,
-                    location: true,
-                    rentPrice: true,
+                    address: true,
+                    city: true,
+                    rent: true,
+                    status: true,
                 },
             },
-            payments: true,
+            payment: true,
+        },
+    });
+};
+const getDashboardStats = async () => {
+    const totalUsers = await prisma.user.count();
+    const totalProperties = await prisma.property.count();
+    const totalRentals = await prisma.rentalRequest.count();
+    const totalPayments = await prisma.payment.count();
+    return {
+        totalUsers,
+        totalProperties,
+        totalRentals,
+        totalPayments,
+    };
+};
+const deleteProperty = async (id) => {
+    await prisma.review.deleteMany({
+        where: {
+            propertyId: id,
+        },
+    });
+    await prisma.payment.deleteMany({
+        where: {
+            rentalRequest: {
+                propertyId: id,
+            },
+        },
+    });
+    await prisma.rentalRequest.deleteMany({
+        where: {
+            propertyId: id,
+        },
+    });
+    return await prisma.property.delete({
+        where: {
+            id,
         },
     });
 };
 export const AdminService = {
+    getDashboardStats,
     getAllUsers,
     updateUserStatus,
     getAllProperties,
     getAllRentalRequests,
+    deleteProperty,
 };
 //# sourceMappingURL=admin.service.js.map

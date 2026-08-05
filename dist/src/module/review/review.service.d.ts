@@ -1,5 +1,5 @@
 export declare const ReviewService: {
-    createReview: (payload: any, tenantId: string) => Promise<{
+    createReview: (payload: any, userId: string) => Promise<{
         id: string;
         createdAt: Date;
         updatedAt: Date;
@@ -8,7 +8,11 @@ export declare const ReviewService: {
         rating: number;
         comment: string;
     }>;
-    getPropertyReviews: (propertyId: string) => Promise<{
+    getPropertyReviews: (propertyId: string) => Promise<({
+        user: {
+            name: string;
+        };
+    } & {
         id: string;
         createdAt: Date;
         updatedAt: Date;
@@ -16,6 +20,6 @@ export declare const ReviewService: {
         userId: string;
         rating: number;
         comment: string;
-    }[]>;
+    })[]>;
 };
 //# sourceMappingURL=review.service.d.ts.map

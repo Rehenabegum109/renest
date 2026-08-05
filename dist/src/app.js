@@ -3,6 +3,7 @@ import globalErrorHandler from "./error/globalErrorHandler.js";
 import notFound from "./error/notFound.js";
 import router from "./route/index.js";
 import cors from "cors";
+import cookieParser from "cookie-parser";
 const app = express();
 app.use(cors({
     origin: "http://localhost:3000",
@@ -10,6 +11,7 @@ app.use(cors({
 }));
 app.use("/api/payments/confirm", express.raw({ type: "application/json" }));
 app.use(express.json());
+app.use(cookieParser());
 app.get("/", (req, res) => {
     res.send("RentNest API is running...");
 });

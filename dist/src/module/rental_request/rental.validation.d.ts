@@ -3,7 +3,7 @@ export declare const RentalValidation: {
     createRentalValidation: z.ZodObject<{
         body: z.ZodObject<{
             propertyId: z.ZodString;
-            message: z.ZodOptional<z.ZodString>;
+            moveInDate: z.ZodString;
         }, z.core.$strip>;
     }, z.core.$strip>;
     updateRentalStatusValidation: z.ZodObject<{

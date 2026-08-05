@@ -7,12 +7,15 @@ const createPropertyValidation = z.object({
         description: z
             .string()
             .min(10, "Description must be at least 10 characters"),
-        location: z
+        address: z
             .string()
-            .min(2, "Location is required"),
-        rentPrice: z
+            .min(2, "Address is required"),
+        city: z
+            .string()
+            .min(2, "City is required"),
+        rent: z
             .number()
-            .positive("Rent price must be greater than 0"),
+            .positive("Rent must be greater than 0"),
         bedrooms: z
             .number()
             .int()
@@ -21,6 +24,9 @@ const createPropertyValidation = z.object({
             .number()
             .int()
             .min(1, "Bathrooms must be at least 1"),
+        image: z
+            .string()
+            .optional(),
         categoryId: z
             .string()
             .min(1, "Category is required"),
@@ -30,12 +36,28 @@ const updatePropertyValidation = z.object({
     body: z.object({
         title: z.string().min(3).optional(),
         description: z.string().min(10).optional(),
-        location: z.string().optional(),
-        rentPrice: z.number().positive().optional(),
-        bedrooms: z.number().int().min(1).optional(),
-        bathrooms: z.number().int().min(1).optional(),
+        address: z.string().optional(),
+        city: z.string().optional(),
+        rent: z
+            .number()
+            .positive()
+            .optional(),
+        bedrooms: z
+            .number()
+            .int()
+            .min(1)
+            .optional(),
+        bathrooms: z
+            .number()
+            .int()
+            .min(1)
+            .optional(),
+        image: z.string().optional(),
         categoryId: z.string().optional(),
-        isAvailable: z.boolean().optional(),
+        status: z.enum([
+            "AVAILABLE",
+            "RENTED"
+        ]).optional(),
     }),
 });
 export const PropertyValidation = {

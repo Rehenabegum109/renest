@@ -6,8 +6,8 @@ const registerUser = async (payload) => {
     const { name, email, password, role } = payload;
     const existingUser = await prisma.user.findUnique({
         where: {
-            email
-        }
+            email,
+        },
     });
     if (existingUser) {
         throw new Error("User already exists");
@@ -21,9 +21,16 @@ const registerUser = async (payload) => {
             role,
         },
     });
-    console.log("Created User:", user);
-    return user;
-    return user;
+    const token = jwt.sign({
+        id: user.id,
+        role: user.role,
+    }, config.jwt_secret, {
+        expiresIn: "7d",
+    });
+    return {
+        token,
+        user,
+    };
 };
 const loginUser = async (payload) => {
     const { email, password } = payload;
@@ -53,16 +60,16 @@ const loginUser = async (payload) => {
 const getMe = async (userId) => {
     const user = await prisma.user.findUnique({
         where: {
-            id: userId
+            id: userId,
         },
         select: {
             id: true,
             name: true,
             email: true,
             role: true,
-            activeStatus: true,
-            createdAt: true
-        }
+            status: true,
+            createdAt: true,
+        },
     });
     if (!user) {
         throw new Error("User not found");

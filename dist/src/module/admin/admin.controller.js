@@ -1,4 +1,12 @@
 import { AdminService } from "./admin.service.js";
+const getDashboardStats = async (req, res) => {
+    const result = await AdminService.getDashboardStats();
+    res.status(200).json({
+        success: true,
+        message: "Dashboard stats fetched successfully",
+        data: result,
+    });
+};
 const getAllUsers = async (req, res) => {
     const result = await AdminService.getAllUsers();
     res.status(200).json({
@@ -39,10 +47,27 @@ const getAllRentalRequests = async (req, res) => {
         data: result,
     });
 };
+const deleteProperty = async (req, res) => {
+    const { id } = req.params;
+    if (!id) {
+        return res.status(400).json({
+            success: false,
+            message: "Property ID required",
+        });
+    }
+    const result = await AdminService.deleteProperty(id);
+    res.status(200).json({
+        success: true,
+        message: "Property deleted successfully",
+        data: result,
+    });
+};
 export const AdminController = {
     getAllUsers,
     updateUserStatus,
     getAllProperties,
     getAllRentalRequests,
+    getDashboardStats,
+    deleteProperty,
 };
 //# sourceMappingURL=admin.controller.js.map

@@ -5,5 +5,6 @@ export declare const PropertyController: {
     getPropertyById: (req: Request, res: Response, next: import("express").NextFunction) => void;
     updateProperty: (req: Request, res: Response, next: import("express").NextFunction) => void;
     deleteProperty: (req: Request, res: Response, next: import("express").NextFunction) => void;
+    getMyProperties: (req: Request, res: Response, next: import("express").NextFunction) => void;
 };
 //# sourceMappingURL=property.controller.d.ts.map

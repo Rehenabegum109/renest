@@ -7,5 +7,6 @@ const router = Router();
 router.post("/register", validateRequest(AuthValidation.registerValidation), AuthController.register);
 router.post("/login", validateRequest(AuthValidation.loginValidation), AuthController.login);
 router.get("/me", auth(), AuthController.getMe);
+router.post("/logout", AuthController.logout);
 export const AuthRoutes = router;
 //# sourceMappingURL=auth.route.js.map

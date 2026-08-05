@@ -27,7 +27,7 @@ export declare const PaymentService: {
             createdAt: Date;
             updatedAt: Date;
             propertyId: string;
-            moveInDate: Date;
+            moveInDate: Date | null;
             tenantId: string;
         };
     } & {
@@ -36,8 +36,8 @@ export declare const PaymentService: {
         createdAt: Date;
         updatedAt: Date;
         rentalRequestId: string;
-        amount: number;
         transactionId: string | null;
+        amount: number;
         provider: import("../../../generated/prisma/index.js").$Enums.PaymentProvider;
         paidAt: Date | null;
         userId: string;
@@ -66,7 +66,7 @@ export declare const PaymentService: {
             createdAt: Date;
             updatedAt: Date;
             propertyId: string;
-            moveInDate: Date;
+            moveInDate: Date | null;
             tenantId: string;
         };
     } & {
@@ -75,8 +75,8 @@ export declare const PaymentService: {
         createdAt: Date;
         updatedAt: Date;
         rentalRequestId: string;
-        amount: number;
         transactionId: string | null;
+        amount: number;
         provider: import("../../../generated/prisma/index.js").$Enums.PaymentProvider;
         paidAt: Date | null;
         userId: string;

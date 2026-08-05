@@ -1,31 +1,29 @@
 import { prisma } from "../../lib/prisma.js";
-const createReview = async (payload, tenantId) => {
-    const review = await prisma.review.create({
+const createReview = async (payload, userId) => {
+    return prisma.review.create({
         data: {
             propertyId: payload.propertyId,
-            tenantId,
+            userId,
             rating: payload.rating,
-            comment: payload.comment
-        }
+            comment: payload.comment,
+        },
     });
-    return review;
 };
 const getPropertyReviews = async (propertyId) => {
     return prisma.review.findMany({
         where: {
-            propertyId
+            propertyId,
         },
         include: {
-            tenant: {
+            user: {
                 select: {
                     name: true,
-                    profileImage: true
-                }
-            }
+                },
+            },
         },
         orderBy: {
-            createdAt: "desc"
-        }
+            createdAt: "desc",
+        },
     });
 };
 export const ReviewService = {
