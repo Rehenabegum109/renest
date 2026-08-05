@@ -63,8 +63,8 @@ const createCheckoutSession = async (
       rentalRequestId: rentalRequest.id,
     },
 
-   success_url: "http://localhost:3000/dashboard/tenant/payments/success",
-cancel_url: "http://localhost:3000/dashboard/tenant/payments/cancel",
+   success_url: "https://renest-client.vercel.app/dashboard/tenant/payments/success",
+cancel_url: "https://renest-client.vercel.app/dashboard/tenant/payments/cancel",
   });
 
   const existingPayment = await prisma.payment.findUnique({
