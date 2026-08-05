@@ -89,7 +89,7 @@ const stripeWebhook = async (req: Request, res: Response) => {
       config.stripe_webhook_secret as string
     );
 
-    console.log("Stripe Event:", event.type);
+
 
     await PaymentService.handleStripeWebhook(event);
 
