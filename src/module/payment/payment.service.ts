@@ -489,7 +489,7 @@ const getPaymentById = async(
 const handleStripeWebhook = async(
  event:Stripe.Event
 )=>{
-
+  console.log("EVENT:", event.type);
 
  if(
   event.type !== "checkout.session.completed"
