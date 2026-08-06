@@ -15,14 +15,16 @@ const register = async (
   httpOnly: true,
   secure: true,
   sameSite: "none",
+    path: "/",
   maxAge: 7 * 24 * 60 * 60 * 1000,
 });
 
     res.status(201).json({
-      success: true,
-      message: "User registered successfully",
-      data: result.user,
-    });
+  success: true,
+  message: "User registered successfully",
+  token: result.token,
+  data: result.user,
+});
   } catch (error) {
     next(error);
   }
@@ -41,12 +43,14 @@ const login = async (
   httpOnly: true,
   secure: true,
   sameSite: "none",
+    path: "/",
   maxAge: 7 * 24 * 60 * 60 * 1000,
 });
 
     res.status(200).json({
       success: true,
       message: "Login successful",
+      token: result.token,
       data: result.user,
     });
   } catch (error) {
