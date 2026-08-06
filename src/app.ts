@@ -19,7 +19,9 @@ app.use(
 app.options("*", cors());
 app.use(
   "/api/payments/confirm",
-  express.raw({ type: "application/json" })
+  express.raw({
+    type: "application/json",
+  })
 );
 app.use(cookieParser());
 app.use(express.json());
