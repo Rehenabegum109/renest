@@ -11,6 +11,7 @@ app.use(
     origin: [
       "http://localhost:3000",
       "https://renest-client.vercel.app",
+      "https://renest-client.netlify.app",
     ],
     credentials: true,
   })
@@ -20,8 +21,9 @@ app.use(
   "/api/payments/confirm",
   express.raw({ type: "application/json" })
 );
-app.use(express.json());
 app.use(cookieParser());
+app.use(express.json());
+
 
 app.get("/", (req: Request, res: Response) => {
   res.send("RentNest API is running...");
