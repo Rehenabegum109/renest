@@ -78,7 +78,6 @@ const getPaymentById = catchAsync(async(req,res)=>{
 
 
 
-
 const stripeWebhook = async (req: Request, res: Response) => {
   const signature = req.headers["stripe-signature"] as string;
 
@@ -88,8 +87,6 @@ const stripeWebhook = async (req: Request, res: Response) => {
       signature,
       config.stripe_webhook_secret as string
     );
-
-
 
     await PaymentService.handleStripeWebhook(event);
 
@@ -109,7 +106,6 @@ const stripeWebhook = async (req: Request, res: Response) => {
     });
   }
 };
-
 
 
 
