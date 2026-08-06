@@ -45,12 +45,50 @@
 //   };
 
 
+// import jwt from "jsonwebtoken";
+// import config from "../config/index.js";
+
+// export const auth = (...roles: string[]) => {
+//   return (req: any, res: any, next: any) => {
+//     const token = req.cookies.accessToken;
+
+//     if (!token) {
+//       return res.status(401).json({
+//         success: false,
+//         message: "Unauthorized",
+//       });
+//     }
+
+//    const decoded = jwt.verify(
+//   token,
+//   config.jwt_secret
+// ) as any;
+
+//     req.user = decoded;
+
+//     if (roles.length && !roles.includes(decoded.role)) {
+//       return res.status(403).json({
+//         success: false,
+//         message: "Forbidden",
+//       });
+//     }
+
+//     next();
+//   };
+// };
+
+
+
 import jwt from "jsonwebtoken";
 import config from "../config/index.js";
 
 export const auth = (...roles: string[]) => {
   return (req: any, res: any, next: any) => {
+    console.log("Cookies:", req.cookies);
+
     const token = req.cookies.accessToken;
+
+    console.log("Token:", token);
 
     if (!token) {
       return res.status(401).json({
@@ -59,20 +97,33 @@ export const auth = (...roles: string[]) => {
       });
     }
 
-   const decoded = jwt.verify(
-  token,
-  config.jwt_secret
-) as any;
+    try {
+      const decoded = jwt.verify(
+        token,
+        config.jwt_secret
+      ) as any;
 
-    req.user = decoded;
+      console.log("Decoded:", decoded);
+      console.log("Required Roles:", roles);
 
-    if (roles.length && !roles.includes(decoded.role)) {
-      return res.status(403).json({
+      req.user = decoded;
+
+      if (roles.length && !roles.includes(decoded.role)) {
+        console.log("Role Mismatch");
+        return res.status(403).json({
+          success: false,
+          message: "Forbidden",
+        });
+      }
+
+      next();
+    } catch (err) {
+      console.log("JWT Error:", err);
+
+      return res.status(401).json({
         success: false,
-        message: "Forbidden",
+        message: "Invalid token",
       });
     }
-
-    next();
   };
 };
