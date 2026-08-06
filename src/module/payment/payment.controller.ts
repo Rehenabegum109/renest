@@ -79,6 +79,9 @@ const getPaymentById = catchAsync(async(req,res)=>{
 
 
 const stripeWebhook = async (req: Request, res: Response) => {
+  console.log("===== WEBHOOK HIT =====");
+  console.log(req.headers);
+
   const signature = req.headers["stripe-signature"] as string;
 
   try {
@@ -88,25 +91,19 @@ const stripeWebhook = async (req: Request, res: Response) => {
       config.stripe_webhook_secret as string
     );
 
+    console.log("EVENT:", event.type);
+
     await PaymentService.handleStripeWebhook(event);
 
-    console.log("Webhook Success");
-
-    res.status(200).json({
-      received: true,
-    });
-
+    res.status(200).json({ received: true });
   } catch (error: any) {
-
     console.log("Webhook Failed:", error);
 
     res.status(400).json({
-      message: "Webhook error",
       error: error.message,
     });
   }
 };
-
 
 
 export const PaymentController={
